@@ -1,0 +1,5 @@
+{
+    "Name": "TestAppTwo",
+    "Photo": "appTest/icon.png",
+    "MainEXE": "appTest/index.html"
+}

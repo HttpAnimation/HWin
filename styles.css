@@ -134,3 +134,11 @@ body {
 .control:hover {
     opacity: 0.7;
 }
+
+/* Dropdown menu */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333; /* Dark mode dropdown menu background color */
+    min-width: 160px;
+    box-shadow: 0 

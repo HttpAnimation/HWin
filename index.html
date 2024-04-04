@@ -10,44 +10,66 @@
         padding: 0;
         overflow: hidden;
     }
-    .window {
+    #desktop {
         position: absolute;
-        border: 1px solid #ccc;
-        background-color: #fff;
-        box-shadow: 0 0 5px rgba(0,0,0,0.3);
-        z-index: 1;
-    }
-    .window-header {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         background-color: #f0f0f0;
-        padding: 5px;
-        cursor: move;
+        padding: 20px;
     }
-    .window-content {
-        padding: 10px;
+    .icon {
+        display: inline-block;
+        margin: 10px;
+        cursor: pointer;
+    }
+    .icon img {
+        width: 64px;
+        height: 64px;
     }
 </style>
 </head>
 <body>
+
+<div id="desktop"></div>
 
 <script>
     // Read apps.json file to fetch app details
     fetch('apps.json')
         .then(response => response.json())
         .then(data => {
+            const desktop = document.getElementById('desktop');
             // Iterate over each app
             for (const [appName, appPath] of Object.entries(data)) {
                 fetch(appPath)
                     .then(response => response.json())
                     .then(appDetails => {
-                        createAppWindow(appName, appDetails);
+                        createAppIcon(desktop, appName, appDetails);
                     })
                     .catch(error => console.error('Error fetching app details:', error));
             }
         })
         .catch(error => console.error('Error fetching apps.json:', error));
 
-    // Function to create app window
-    function createAppWindow(appName, appDetails) {
+    // Function to create app icon
+    function createAppIcon(desktop, appName, appDetails) {
+        const icon = document.createElement('div');
+        icon.className = 'icon';
+        const img = document.createElement('img');
+        img.src = appDetails.Photo;
+        img.alt = appDetails.Name;
+        icon.appendChild(img);
+
+        icon.addEventListener('click', () => {
+            openAppWindow(appName, appDetails);
+        });
+
+        desktop.appendChild(icon);
+    }
+
+    // Function to open app window
+    function openAppWindow(appName, appDetails) {
         const windowElement = document.createElement('div');
         windowElement.className = 'window';
         windowElement.style.top = '50px';

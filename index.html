@@ -9,24 +9,39 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        background-color: #f0f0f0;
     }
     #desktop {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #f0f0f0;
-        padding: 20px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
     }
-    .icon {
-        display: inline-block;
+    .app-icon {
+        width: 80px;
+        height: 80px;
         margin: 10px;
         cursor: pointer;
     }
-    .icon img {
-        width: 64px;
-        height: 64px;
+    .app-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .window {
+        position: absolute;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        z-index: 1;
+    }
+    .window-header {
+        background-color: #f0f0f0;
+        padding: 5px;
+        cursor: move;
+    }
+    .window-content {
+        padding: 10px;
     }
 </style>
 </head>
@@ -45,7 +60,7 @@
                 fetch(appPath)
                     .then(response => response.json())
                     .then(appDetails => {
-                        createAppIcon(desktop, appName, appDetails);
+                        createAppIcon(appName, appDetails, desktop);
                     })
                     .catch(error => console.error('Error fetching app details:', error));
             }
@@ -53,19 +68,15 @@
         .catch(error => console.error('Error fetching apps.json:', error));
 
     // Function to create app icon
-    function createAppIcon(desktop, appName, appDetails) {
-        const icon = document.createElement('div');
-        icon.className = 'icon';
+    function createAppIcon(appName, appDetails, parentElement) {
+        const appIcon = document.createElement('div');
+        appIcon.className = 'app-icon';
         const img = document.createElement('img');
         img.src = appDetails.Photo;
-        img.alt = appDetails.Name;
-        icon.appendChild(img);
-
-        icon.addEventListener('click', () => {
-            openAppWindow(appName, appDetails);
-        });
-
-        desktop.appendChild(icon);
+        img.alt = appName;
+        appIcon.appendChild(img);
+        appIcon.addEventListener('click', () => openAppWindow(appName, appDetails));
+        parentElement.appendChild(appIcon);
     }
 
     // Function to open app window
@@ -78,7 +89,6 @@
         const windowHeader = document.createElement('div');
         windowHeader.className = 'window-header';
         windowHeader.textContent = appDetails.Name;
-        windowHeader.style.backgroundImage = `url('${appDetails.Photo}')`;
         windowElement.appendChild(windowHeader);
 
         const windowContent = document.createElement('div');

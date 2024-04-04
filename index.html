@@ -23,11 +23,13 @@
         height: 100px;
         margin: 10px;
         cursor: pointer;
+        border-radius: 50%; /* Rounded corners for the desktop icons */
+        overflow: hidden; /* Ensures content doesn't overflow if content is larger than the container */
     }
     .app-icon img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover; /* Ensure the image covers the entire container */
     }
     .window {
         position: absolute;

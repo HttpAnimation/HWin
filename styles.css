@@ -9,9 +9,10 @@ body {
 
 #desktop {
     width: 100%;
-    height: calc(100% - 70px); /* Adjust height for the dock */
+    height: calc(100% - 100px); /* Adjust height for the dock and top bar */
     display: flex;
     flex-wrap: wrap;
+    margin-top: 30px; /* Add space between top bar and icons */
 }
 
 .app-icon {

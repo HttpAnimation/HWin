@@ -1,2 +1,2 @@
 # HWin
-HTML display manager
+HTML display manager for silveros

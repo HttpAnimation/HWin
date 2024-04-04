@@ -146,6 +146,8 @@ body {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
     top: 30px; /* Position relative to the top bar */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Fade-in/out transition */
 }
 
 .dropdown-content a {
@@ -161,4 +163,5 @@ body {
 
 .show {
     display: block;
+    opacity: 1;
 }

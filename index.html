@@ -18,8 +18,8 @@
         flex-wrap: wrap;
     }
     .app-icon {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         margin: 10px;
         cursor: pointer;
     }
@@ -39,6 +39,14 @@
         background-color: #f0f0f0;
         padding: 5px;
         cursor: move;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .window-header img {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
     }
     .window-content {
         padding: 10px;
@@ -89,6 +97,13 @@
         const windowHeader = document.createElement('div');
         windowHeader.className = 'window-header';
         windowHeader.textContent = appDetails.Name;
+        const closeButton = document.createElement('img');
+        closeButton.src = 'close.png';
+        closeButton.alt = 'Close';
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(windowElement);
+        });
+        windowHeader.appendChild(closeButton);
         windowElement.appendChild(windowHeader);
 
         const windowContent = document.createElement('div');

@@ -47,6 +47,11 @@
         width: 20px;
         height: 20px;
         cursor: pointer;
+        margin-left: 10px;
+    }
+    .window-title {
+        flex-grow: 1;
+        text-align: center;
     }
     .window-content {
         padding: 10px;
@@ -96,7 +101,12 @@
 
         const windowHeader = document.createElement('div');
         windowHeader.className = 'window-header';
-        windowHeader.textContent = appDetails.Name;
+        
+        const windowTitle = document.createElement('div');
+        windowTitle.className = 'window-title';
+        windowTitle.textContent = appDetails.Name;
+        windowHeader.appendChild(windowTitle);
+
         const closeButton = document.createElement('img');
         closeButton.src = 'close.png';
         closeButton.alt = 'Close';
@@ -104,6 +114,7 @@
             document.body.removeChild(windowElement);
         });
         windowHeader.appendChild(closeButton);
+        
         windowElement.appendChild(windowHeader);
 
         const windowContent = document.createElement('div');

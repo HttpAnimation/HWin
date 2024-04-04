@@ -1,3 +1,4 @@
 {
-    "appTest": "appTest/package.json"
+    "appTest": "appTest/package.json",
+    "appTest2": "appTest2/package.json"
 }

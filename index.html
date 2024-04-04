@@ -12,6 +12,11 @@
     <div id="title">SilverOS</div>
     <div id="system-controls">
     </div>
+    <div id="dropdown-menu" class="dropdown-content">
+        <a href="#">Option 1</a>
+        <a href="#">Option 2</a>
+        <a href="#">Option 3</a>
+    </div>
 </div>
 
 <div id="desktop"></div>
@@ -148,6 +153,22 @@
             }
         })
         .catch(error => console.error('Error fetching dockApps.json:', error));
+
+    // Toggle dropdown menu visibility
+    document.getElementById('title').addEventListener('click', () => {
+        const dropdown = document.getElementById('dropdown-menu');
+        dropdown.classList.toggle('show');
+    });
+
+    // Close dropdown menu if user clicks outside of it
+    window.addEventListener('click', event => {
+        const dropdown = document.getElementById('dropdown-menu');
+        if (!event.target.matches('#title')) {
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+            }
+        }
+    });
 </script>
 
 </body>

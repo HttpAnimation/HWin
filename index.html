@@ -14,7 +14,7 @@
     }
     #desktop {
         width: 100%;
-        height: 100%;
+        height: calc(100% - 50px); /* Adjust height for the dock */
         display: flex;
         flex-wrap: wrap;
     }
@@ -59,14 +59,41 @@
     .window-content {
         padding: 10px;
     }
+    #dock {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px; /* Height of the dock */
+        background-color: #333; /* Dark mode background color */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 20px;
+        border-top: 1px solid #666; /* Dark mode border color */
+    }
+    .dock-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 10px;
+        cursor: pointer;
+        border-radius: 50%; /* Rounded corners for the dock icons */
+        overflow: hidden; /* Ensures content doesn't overflow if content is larger than the container */
+    }
+    .dock-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Ensure the image is contained within the container */
+    }
 </style>
 </head>
 <body>
 
 <div id="desktop"></div>
+<div id="dock"></div>
 
 <script>
-    // Read apps.json file to fetch app details
+    // Read apps.json file to fetch app details for desktop icons
     fetch('apps.json')
         .then(response => response.json())
         .then(data => {
@@ -83,7 +110,24 @@
         })
         .catch(error => console.error('Error fetching apps.json:', error));
 
-    // Function to create app icon
+    // Read dockApps.json file to fetch app details for dock icons
+    fetch('dockApps.json')
+        .then(response => response.json())
+        .then(data => {
+            const dock = document.getElementById('dock');
+            // Iterate over each app
+            for (const [appName, appPath] of Object.entries(data)) {
+                fetch(appPath)
+                    .then(response => response.json())
+                    .then(appDetails => {
+                        createDockIcon(appName, appDetails, dock);
+                    })
+                    .catch(error => console.error('Error fetching app details for dock:', error));
+            }
+        })
+        .catch(error => console.error('Error fetching dockApps.json:', error));
+
+    // Function to create app icon for desktop
     function createAppIcon(appName, appDetails, parentElement) {
         const appIcon = document.createElement('div');
         appIcon.className = 'app-icon';
@@ -93,6 +137,18 @@
         appIcon.appendChild(img);
         appIcon.addEventListener('click', () => openAppWindow(appName, appDetails));
         parentElement.appendChild(appIcon);
+    }
+
+    // Function to create app icon for dock
+    function createDockIcon(appName, appDetails, parentElement) {
+        const dockIcon = document.createElement('div');
+        dockIcon.className = 'dock-icon';
+        const img = document.createElement('img');
+        img.src = appDetails.Photo;
+        img.alt = appName;
+        dockIcon.appendChild(img);
+        dockIcon.addEventListener('click', () => openAppWindow(appName, appDetails));
+        parentElement.appendChild(dockIcon);
     }
 
     // Function to open app window
